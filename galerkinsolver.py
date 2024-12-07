@@ -8,7 +8,7 @@ def computeExactSolution(x, time):
     """
     return np.exp(-time) * np.sin(np.pi * x)
 
-def computeSourceTerm(x, time):
+def computeRHSTerm(x, time):
     """
     Compute the source term for the problem.
 
