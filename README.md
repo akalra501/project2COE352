@@ -1,32 +1,21 @@
 ## Project Objective
 
 This project aims to solve the 1D heat transfer problem using the Galerkin Finite Element Method (FEM). The problem is defined by the partial differential equation:
-
-\[ 
-u_t - u_{xx} = f(x, t), \quad (x, t) \in (0, 1) \times (0, 1),
-\]
+u_t - u_{xx} = f(x, t)
 
 with the following conditions:
 
 - **Initial Condition**:  
-  \[
-  u(x, 0) = \sin(\pi x),
-  \]
+  u(x, 0) = sin(pi*x),
 
 - **Dirichlet Boundary Conditions**:  
-  \[
   u(0, t) = u(1, t) = 0,
-  \]
 
 - **Source Term**:  
-  \[
-  f(x, t) = (\pi^2 - 1)e^{-t} \sin(\pi x),
-  \]
+  f(x, t) = (pi^2 - 1)e^{-t} sin(pi*x),
 
 - **Analytical Solution**:  
-  \[
-  u(x, t) = e^{-t} \sin(\pi x).
-  \]
+  u(x, t) = e^{-t} * sin(pi*x).
 
 ### Key Features:
 1. **Generalized Framework**:  
