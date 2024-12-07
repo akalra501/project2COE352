@@ -4,14 +4,12 @@ import matplotlib.pyplot as plt
 def computeExactSolution(x, time):
     """
     Compute the exact solution for the problem.
-
     """
     return np.exp(-time) * np.sin(np.pi * x)
 
 def computeRHSTerm(x, time):
     """
     Compute the source term for the problem.
-
     """
     return (np.pi**2 - 1) * np.exp(-time) * np.sin(np.pi * x)
 
@@ -19,21 +17,18 @@ def computeRHSTerm(x, time):
 def computeInitialCondition(x):
     """
     Compute the initial condition for the problem.
-
     """
     return np.sin(np.pi * x)
 
 def createElementMapping(numNodes):
     """
     Create element-to-node mapping for FEM.
-
     """
     return np.vstack((np.arange(0, numNodes - 1), np.arange(1, numNodes))).T
 
 def createEmptyMatrices(numNodes, numTimesteps):
     """
     Create empty matrices for stiffness, mass, and force.
-
     """
     return (np.zeros((numNodes, numNodes)),
             np.zeros((numNodes, numNodes)),
@@ -42,7 +37,6 @@ def createEmptyMatrices(numNodes, numTimesteps):
 def createBasisFunctions(elementLength):
     """
     Create basis functions and associated data for FEM.
-
     """
     basisFunc1 = lambda zeta: (1 - zeta) / 2
     basisFunc2 = lambda zeta: (1 + zeta) / 2
@@ -56,7 +50,6 @@ def assembleFEMMatrices(numNodes, numTimesteps, stiffnessMatrix, massMatrix, for
                         derivatives, derivativeScaling, integralScaling, elementLength):
     """
     Assemble FEM matrices for the problem.
-
     """
     quadraturePoints = [-0.57735026919, 0.57735026919]
     for elementIndex in range(numNodes - 1):
@@ -78,7 +71,6 @@ def assembleFEMMatrices(numNodes, numTimesteps, stiffnessMatrix, massMatrix, for
 def applyDirichletConditions(massMatrix, numNodes):
     """
     Apply Dirichlet boundary conditions to the mass matrix.
-
     """
     massMatrix[0, :] = massMatrix[-1, :] = massMatrix[:, 0] = massMatrix[:, -1] = 0
     massMatrix[0, 0] = massMatrix[-1, -1] = 1
@@ -90,7 +82,6 @@ def applyDirichletConditions(massMatrix, numNodes):
 def setupEulerMatrices(massMatrix, stiffnessMatrix, timestepSize):
     """
     Set up matrices for Euler time integration methods.
-
     """
     inverseMassMatrix = np.linalg.inv(massMatrix)
     eulerMatrix = (1 / timestepSize) * massMatrix + stiffnessMatrix
@@ -99,7 +90,6 @@ def setupEulerMatrices(massMatrix, stiffnessMatrix, timestepSize):
 def solveEulerTimesteps(numNodes, numTimesteps, timestepSize, massStiffnessProduct, inverseMassMatrix, massMatrix, forceMatrix, boundaryConditions, eulerMethod, nodeCoords, inverseEulerMatrix):
     """
     Solve the problem using Euler time integration methods.
-
     """
     solution = np.zeros((numNodes, numTimesteps + 1))
     solution[:, 0] = computeInitialCondition(nodeCoords)
@@ -115,7 +105,6 @@ def solveEulerTimesteps(numNodes, numTimesteps, timestepSize, massStiffnessProdu
 def plotComparison(continuousCoords, analyticalSolution, femCoords, numericalSolution, numTimesteps, eulerMethod):
     """
     Plot comparison between analytical and numerical solutions.
-
     """
     plt.plot(continuousCoords, analyticalSolution, label='Analytical Solution', color="black")
     methodLabel = "Forward Euler" if eulerMethod == "FE" else "Backward Euler"
@@ -129,7 +118,6 @@ def plotComparison(continuousCoords, analyticalSolution, femCoords, numericalSol
 def solveFEMWithMethod(numNodes, numTimesteps, nodeCoords, timeSteps, elementLength, timestepSize, method):
     """
     Solve the FEM problem for the specified method.
-
     """
     massMatrix, stiffnessMatrix, forceMatrix = createEmptyMatrices(numNodes, numTimesteps)
     mapping = createElementMapping(numNodes)
@@ -153,7 +141,6 @@ def solveFEMWithMethod(numNodes, numTimesteps, nodeCoords, timeSteps, elementLen
 def chooseEulerMethod():
     """
     Prompt the user to choose an Euler method and ensure valid input.
-
     """
     while True:
         method = input("Type FE for Forward Euler and BE for Backward Euler (NO OTHER VALUES): ").upper()
@@ -164,7 +151,6 @@ def chooseEulerMethod():
 def main():
     """
     Main function to solve the FEM problem.
-
     """
     try:
         numNodes = int(input("Input the number of spatial nodes(N): "))
