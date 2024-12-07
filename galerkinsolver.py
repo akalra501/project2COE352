@@ -34,17 +34,30 @@ def createEmptyMatrices(numNodes, numTimesteps):
             np.zeros((numNodes, numNodes)),
             np.zeros((numNodes, numTimesteps + 1)))
 
+def basisFunc1(zeta):
+    """
+    Basis function 1 for FEM.
+    """
+    return (1 - zeta) / 2
+
+def basisFunc2(zeta):
+    """
+    Basis function 2 for FEM.
+    """
+    return (1 + zeta) / 2
+
 def createBasisFunctions(elementLength):
     """
     Create basis functions and associated data for FEM.
     """
-    basisFunc1 = lambda zeta: (1 - zeta) / 2
-    basisFunc2 = lambda zeta: (1 + zeta) / 2
-    
     basisFunctionDerivatives = np.array([-1 / 2, 1 / 2])
     quadraturePoints = [-1 / np.sqrt(3), 1 / np.sqrt(3)]
+    
+    # Using the previously defined basis functions
     basisFunctionsAtQuad = np.array([[basisFunc1(zeta), basisFunc2(zeta)] for zeta in quadraturePoints])
+    
     return (basisFunctionsAtQuad, basisFunctionDerivatives, 2 / elementLength, elementLength / 2)
+
 
 def assembleFEMMatrices(numNodes, numTimesteps, stiffnessMatrix, massMatrix, forceMatrix, mapping, basisFunctions, 
                         derivatives, derivativeScaling, integralScaling, elementLength):
